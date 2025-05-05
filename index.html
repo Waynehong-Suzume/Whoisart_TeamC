@@ -149,24 +149,21 @@
     const bgm = document.getElementById("bgm");
 
     let i = 0;
-    let displayText = "";
+    let buffer = "";
 
     function typeEffect(text) {
-  let buffer = "";  // 타자 효과 중 글자를 누적할 변수
-
-  function typingStep() {
-    if (i < text.length) {
-      buffer += text.charAt(i);
-      quote.innerHTML = buffer.replaceAll("||", "<br>"); // 매 글자마다 갱신
-      i++;
-      setTimeout(typingStep, Math.random() * 40 + 60);
-    } else {
-      setTimeout(() => { signature.style.opacity = 1; }, 300);
-      setTimeout(() => { subtitle.style.opacity = 1; }, 800);
-    }
-  }
-
-  typingStep();
+      function typing() {
+        if (i < text.length) {
+          buffer += text.charAt(i);
+          quote.innerHTML = buffer.replaceAll("||", "<br>");
+          i++;
+          setTimeout(typing, Math.random() * 40 + 60);
+        } else {
+          setTimeout(() => { signature.style.opacity = 1; }, 300);
+          setTimeout(() => { subtitle.style.opacity = 1; }, 800);
+        }
+      }
+      typing();
     }
 
     window.onload = () => {
@@ -179,6 +176,7 @@
         bgm.play().catch(e => console.log('BGM 재생 실패:', e));
         intro.style.opacity = 0;
         clickPrompt.style.opacity = 0;
+
         setTimeout(() => {
           intro.style.visibility = "hidden";
           clickPrompt.style.visibility = "hidden";
@@ -188,10 +186,9 @@
           const selected = quotes[index];
           const source = sources[index];
 
-          quote.textContent = "";   // 초기화
+          quote.innerHTML = "";
           i = 0;
-          displayText = selected;
-          
+          buffer = "";
           signature.style.opacity = 0;
           subtitle.style.opacity = 0;
           signature.textContent = source;
