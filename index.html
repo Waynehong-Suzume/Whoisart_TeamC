@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>랜덤 문구</title>
-  <link href="https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSans.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSans.css" rel="stylesheet" />
   <style>
     html, body {
       margin: 0;
@@ -98,7 +98,7 @@
     <div class="subtitle" id="subtitle">이 한마디가 당신의 하루에 작은 울림이 되기를</div>
   </div>
   <audio id="bgm" preload="auto">
-    <source src="./bgm/Your New Home.mp3" type="audio/mpeg">
+    <source src="./bgm/Your New Home.mp3" type="audio/mpeg" />
   </audio>
 
   <script>
@@ -149,12 +149,12 @@
     const bgm = document.getElementById("bgm");
 
     let i = 0;
-    let rawOutput = "";
+    let displayText = "";
 
     function typeEffect(text) {
       if (i < text.length) {
-        rawOutput += text.charAt(i);
-        quote.innerHTML = rawOutput.replaceAll('||', '<br>');
+        displayText += text.charAt(i);
+        quote.innerHTML = displayText.replaceAll("||", "<br>");
         i++;
         setTimeout(() => typeEffect(text), Math.random() * 40 + 60);
       } else {
@@ -173,7 +173,6 @@
         bgm.play().catch(e => console.log('BGM 재생 실패:', e));
         intro.style.opacity = 0;
         clickPrompt.style.opacity = 0;
-
         setTimeout(() => {
           intro.style.visibility = "hidden";
           clickPrompt.style.visibility = "hidden";
@@ -183,12 +182,12 @@
           const selected = quotes[index];
           const source = sources[index];
 
-          rawOutput = "";
-          i = 0;
           quote.innerHTML = "";
-          signature.textContent = source;
+          displayText = "";
+          i = 0;
           signature.style.opacity = 0;
           subtitle.style.opacity = 0;
+          signature.textContent = source;
 
           typeEffect(selected);
         }, 1000);
