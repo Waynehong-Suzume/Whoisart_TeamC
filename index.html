@@ -152,16 +152,17 @@
     let displayText = "";
 
     function typeEffect(text) {
-      if (i < text.length) {
-        displayText += text.charAt(i);
-        quote.innerHTML = displayText.replaceAll("||", "<br>");
-        i++;
-        setTimeout(() => typeEffect(text), Math.random() * 40 + 60);
-      } else {
-        setTimeout(() => { signature.style.opacity = 1; }, 300);
-        setTimeout(() => { subtitle.style.opacity = 1; }, 800);
-      }
-    }
+  if (i < text.length) {
+    quote.textContent += text.charAt(i);  // 여기는 textContent로!
+    i++;
+    setTimeout(() => typeEffect(text), Math.random() * 40 + 60);
+  } else {
+    // 최종적으로 줄바꿈 포함된 HTML로 바꿔주기!
+    quote.innerHTML = text.replaceAll("||", "<br>");
+    setTimeout(() => { signature.style.opacity = 1; }, 300);
+    setTimeout(() => { subtitle.style.opacity = 1; }, 800);
+  }
+}
 
     window.onload = () => {
       intro.style.opacity = 1;
@@ -182,9 +183,8 @@
           const selected = quotes[index];
           const source = sources[index];
 
-          quote.innerHTML = "";
-          displayText = "";
-          i = 0;
+          quote.textContent = "";   // 초기화
+i = 0;
           signature.style.opacity = 0;
           subtitle.style.opacity = 0;
           signature.textContent = source;
