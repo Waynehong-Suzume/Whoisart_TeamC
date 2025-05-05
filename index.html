@@ -152,17 +152,22 @@
     let displayText = "";
 
     function typeEffect(text) {
-  if (i < text.length) {
-    quote.textContent += text.charAt(i);  // 여기는 textContent로!
-    i++;
-    setTimeout(() => typeEffect(text), Math.random() * 40 + 60);
-  } else {
-    // 최종적으로 줄바꿈 포함된 HTML로 바꿔주기!
-    quote.innerHTML = text.replaceAll("||", "<br>");
-    setTimeout(() => { signature.style.opacity = 1; }, 300);
-    setTimeout(() => { subtitle.style.opacity = 1; }, 800);
+  let buffer = "";  // 타자 효과 중 글자를 누적할 변수
+
+  function typingStep() {
+    if (i < text.length) {
+      buffer += text.charAt(i);
+      quote.innerHTML = buffer.replaceAll("||", "<br>"); // 매 글자마다 갱신
+      i++;
+      setTimeout(typingStep, Math.random() * 40 + 60);
+    } else {
+      setTimeout(() => { signature.style.opacity = 1; }, 300);
+      setTimeout(() => { subtitle.style.opacity = 1; }, 800);
+    }
   }
-}
+
+  typingStep();
+    }
 
     window.onload = () => {
       intro.style.opacity = 1;
