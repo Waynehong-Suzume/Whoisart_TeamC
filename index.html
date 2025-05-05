@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>랜덤 문구</title>
+  <link href="https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSans.css" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 40px;
+      background-color: #ffffff;
+      font-family: 'GmarketSans', sans-serif;
+      color: #111;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .title {
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      text-align: left;
+    }
+    .quote {
+      font-size: 22px;
+      font-weight: 300; /* Light */
+      white-space: pre-wrap;
+      line-height: 1.6;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="title">당신에게 전하는 한마디</div>
+    <div class="quote" id="quote"></div>
+  </div>
+
+  <script>
+    const quotes = [
+      "후즈아트에 심장을 바쳐라.",
+      "현실에서 찐따였던 내가 여기에서는 초절정 인싸!?.",
+      "이해가 안 가는군···. 쓰러지는 것만으로도 이미 '수치'거늘.",
+      "멈춰라, 퍼핑톰···. 넌 널 낳아준 아버지를 어디로 데려갈 참이냐···!!",
+      "나루토, 예언의 아이는 틀림없이 너다···!!!",
+      "야가미 라이토···. 아니, 키라. 키라는 오늘 여기서 끝난다.",
+      "니아, 넌 L보다 훨씬 뒤떨어져···. 네게 L의 가면을 쓸 자격도 없다···.",
+      "용서해라 사스케···. 이게 마지막이다···.",
+      "등짝의 상처는 검사의 수치다···!!!",
+      "울지마라, 전국 대회는 이제 막 시작했을 뿐이야···."
+    ];
+
+    const selected = quotes[Math.floor(Math.random() * quotes.length)];
+    const target = document.getElementById("quote");
+    let i = 0;
+
+    function typeEffect() {
+      if (i < selected.length) {
+        target.textContent += selected.charAt(i);
+        i++;
+        setTimeout(typeEffect, 80);
+      }
+    }
+
+    window.onload = () => {
+      console.log("랜덤 문구 선택됨:", selected);
+      typeEffect();
+    };
+  </script>
+</body>
+</html>
