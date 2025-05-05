@@ -9,7 +9,9 @@
     body {
       margin: 0;
       padding: 40px;
-      background-color: #ffffff;
+      background: linear-gradient(120deg, #ffffff, #f5f7fa, #ffffff);
+      background-size: 200% 200%;
+      animation: gradientMove 20s ease infinite;
       font-family: 'GmarketSans', sans-serif;
       color: #2E2B2B;
     }
@@ -25,7 +27,7 @@
     }
     .quote {
       font-size: 22px;
-      font-weight: 300; /* Light */
+      font-weight: 300;
       white-space: pre-wrap;
       line-height: 1.6;
       text-align: left;
@@ -52,6 +54,12 @@
     @keyframes fadeIn {
       from { opacity: 0; }
       to { opacity: 1; }
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     @media (max-width: 768px) {
@@ -81,7 +89,7 @@
   <div class="container">
     <div class="title">후즈아트가 당신에게 전하는 한마디</div>
     <div class="quote" id="quote"></div>
-    <div class="signature" id="signature">— 어느 만화 속 주인공의 대사에서</div>
+    <div class="signature" id="signature">— 어느 만화 속 주인공의 대사 중</div>
     <div class="subtitle" id="subtitle">이 한마디가 당신의 하루에 작은 울림이 되기를</div>
   </div>
 
@@ -109,7 +117,7 @@
       if (i < selected.length) {
         target.textContent += selected.charAt(i);
         i++;
-        setTimeout(typeEffect, 80);
+        setTimeout(typeEffect, Math.random() * 40 + 60);
       } else {
         setTimeout(() => {
           signature.style.opacity = 1;
