@@ -94,7 +94,7 @@
     <div class="click-prompt" id="clickPrompt">화면을 클릭해주세요</div>
     <div class="title" id="title">후즈아트가 당신에게 전하는 한마디</div>
     <div class="quote" id="quote"></div>
-    <div class="signature" id="signature">— 어느 만화 속 등장인물 중</div>
+    <div class="signature" id="signature"></div>
     <div class="subtitle" id="subtitle">이 한마디가 당신의 하루에 작은 울림이 되기를</div>
   </div>
   <audio id="bgm" preload="auto">
@@ -103,15 +103,40 @@
   <script>
     const quotes = [
       "후즈아트에 심장을 바쳐라.",
-      "현실에서 찐따였던 내가 여기에서는 초절정 인싸!?",
+      "재능은 꽃 피우는 것, 센스는 갈고 닦는 것.",
       "이해가 안 가는군···. 쓰러지는 것만으로도 이미 '수치'거늘.",
       "멈춰라, 퍼핑톰···. 넌 널 낳아준 아버지를 어디로 데려갈 참이냐···!!",
-      "나루토, 예언의 아이는 틀림없이 너다···!!!",
-      "야가미 라이토···. 아니, 키라. 키라는 오늘 여기서 끝난다.",
-      "니아, 넌 L보다 훨씬 뒤떨어져···. 네게 L의 가면을 쓸 자격도 없다···.",
-      "용서해라 사스케···. 이게 마지막이다···.",
-      "등짝의 상처는 검사의 수치다···!!!",
+      "나루토, 예언의 아이는 틀림없이 너다···!!! 이 뒤는 모두 네게 맡기마!",
+      "그래, 나 정대만···. 포기를 모르는 남자지.",
+      "니아, 넌 L보다 훨씬 뒤떨어져···. 네겐 L의 가면을 쓸 자격도 없다.",
+      "이 꽉물어라···. 내 최약은 조금 아플 테니까·.",
+      "포기하면 그 순간이 바로 시합 종료입니다.",
       "울지마라, 전국 대회는 이제 막 시작했을 뿐이야···."
+      "인생은 살아만 있다면, 몇번이든 새출발할 수 있으니까···."
+      "인간이 5명이나 모이면, 반드시 1명은 쓰레기가 있다."
+      "이 앞엔 어두운 밤길만 펼쳐져 있을지 몰라. 그래도 믿고 나아가는 거야. 별이 희미하게나마 길을 비춰 주리란 걸 믿어."
+      "살아라···. 그대는 아름답다···."
+      "오마에와ㅡ 모 신데이루···!!!"
+      "너무 강한 말은 쓰지마···. 약해 보인다구."
+    ];
+
+    const sources = [
+      "— 에렌 예거, 『진격의 거인』",
+      "— 오이카와 토오루, 『하이큐』",
+      "— 샬롯 카타쿠리, 『원피스』",
+      "— 프랑키, 『원피스』",
+      "— 지라이야, 『나루토』",
+      "— 정대만, 『슬램덩크』",
+      "— 라이토, 『데스노트』",
+      "— 카미죠 토우마, 『어떤 마술의 금서목록』",
+      "— 안선생님, 『슬램덩크』",
+      "— 채치수, 『슬램덩크』"
+      "— 오니즈카, 『반항하지마!』"
+      "— 지로보, 『나루토』"
+      "— 미야조노 카오리, 『4월은 너의 거짓말』"
+      "— 아시타카, 『원령공주』"
+      "— 켄시로, 『북두의 권』"
+      "— 아이젠 소스케, 『블리치』"
     ];
 
     const intro = document.getElementById("intro");
@@ -152,8 +177,11 @@
           intro.style.visibility = "hidden";
           clickPrompt.style.visibility = "hidden";
           title.style.opacity = 1;
-          const selected = quotes[Math.floor(Math.random() * quotes.length)];
+          const index = Math.floor(Math.random() * quotes.length);
+          const selected = quotes[index];
+          const source = sources[index];
           quote.style.opacity = 1;
+          signature.textContent = source;
           typeEffect(selected);
         }, 1000);
       }, { once: true });
