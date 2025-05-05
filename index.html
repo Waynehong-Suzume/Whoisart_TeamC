@@ -11,7 +11,7 @@
       padding: 40px;
       background-color: #ffffff;
       font-family: 'GmarketSans', sans-serif;
-      color: #111;
+      color: #2E2B2B;
     }
     .container {
       max-width: 800px;
@@ -29,35 +29,60 @@
       white-space: pre-wrap;
       line-height: 1.6;
       text-align: left;
+      animation: fadeIn 1.2s ease-in;
     }
-  @media (max-width: 768px) {
-    .title {
-      font-size: 22px;
+    .signature {
+      font-size: 14px;
+      color: #aaa;
+      font-style: italic;
+      margin-top: 12px;
+      text-align: left;
+      opacity: 0;
+      transition: opacity 1.2s ease-in;
     }
-    .quote {
-      font-size: 18px;
-      line-height: 1.5;
+    .subtitle {
+      font-size: 14px;
+      color: #888;
+      margin-top: 20px;
+      text-align: left;
+      opacity: 0;
+      transition: opacity 1.2s ease-in;
     }
-  }
 
-  @media (max-width: 480px) {
-    body {
-      padding: 24px;
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
-    .title {
-      font-size: 20px;
+
+    @media (max-width: 768px) {
+      .title {
+        font-size: 22px;
+      }
+      .quote {
+        font-size: 18px;
+        line-height: 1.5;
+      }
     }
-    .quote {
-      font-size: 16px;
+
+    @media (max-width: 480px) {
+      body {
+        padding: 24px;
+      }
+      .title {
+        font-size: 20px;
+      }
+      .quote {
+        font-size: 16px;
+      }
     }
-  }
-    
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="title">후즈아트가 당신에게 전하는 한마디</div>
+    <div class="title">당신에게 전하는 한마디</div>
     <div class="quote" id="quote"></div>
+    <div class="signature" id="signature">— 어느 만화 속 주인공의 대사에서</div>
+    <div class="subtitle" id="subtitle">이 한마디가 당신의 하루에 작은 울림이 되기를</div>
   </div>
 
   <script>
@@ -76,6 +101,8 @@
 
     const selected = quotes[Math.floor(Math.random() * quotes.length)];
     const target = document.getElementById("quote");
+    const signature = document.getElementById("signature");
+    const subtitle = document.getElementById("subtitle");
     let i = 0;
 
     function typeEffect() {
@@ -83,6 +110,14 @@
         target.textContent += selected.charAt(i);
         i++;
         setTimeout(typeEffect, 80);
+      } else {
+        setTimeout(() => {
+          signature.style.opacity = 1;
+        }, 500);
+
+        setTimeout(() => {
+          subtitle.style.opacity = 1;
+        }, 1500);
       }
     }
 
