@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>랜덤 문구</title>
   <link href="https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSans.css" rel="stylesheet">
   <style>
@@ -22,6 +22,24 @@
       margin: 0 auto;
       padding: 40px;
     }
+    .intro, .click-prompt, .quote, .signature, .subtitle, .title {
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+    .intro {
+      font-size: 24px;
+      font-weight: 500;
+      margin-top: 20%;
+      text-align: center;
+      visibility: visible;
+    }
+    .click-prompt {
+      font-size: 18px;
+      margin-top: 20px;
+      color: #555;
+      text-align: center;
+      visibility: visible;
+    }
     .title {
       font-size: 28px;
       font-weight: 600;
@@ -34,8 +52,8 @@
       white-space: pre-wrap;
       line-height: 1.6;
       text-align: left;
-      animation: fadeIn 1.2s ease-in;
       text-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+      margin-top: 20px;
     }
     .signature {
       font-size: 14px;
@@ -43,74 +61,45 @@
       font-style: italic;
       margin-top: 12px;
       text-align: left;
-      opacity: 0;
-      transition: opacity 1.2s ease-in;
     }
     .subtitle {
       font-size: 14px;
       color: #888;
       margin-top: 20px;
       text-align: left;
-      opacity: 0;
-      transition: opacity 1.2s ease-in;
     }
-    .fade-screen {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: #ffffff;
-      z-index: 999;
-      animation: screenFade 1.2s ease-out forwards;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
     @keyframes gradientMove {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-
-    @keyframes screenFade {
-      0% { opacity: 1; }
-      100% { opacity: 0; display: none; }
-    }
-
     @media (max-width: 768px) {
-      .title {
-        font-size: 22px;
-      }
-      .quote {
-        font-size: 18px;
-        line-height: 1.5;
-      }
+      .intro { font-size: 20px; }
+      .click-prompt { font-size: 16px; }
+      .title { font-size: 22px; }
+      .quote { font-size: 18px; line-height: 1.5; }
     }
-
     @media (max-width: 480px) {
-      .container {
-        padding: 24px;
-      }
-      .title {
-        font-size: 20px;
-      }
-      .quote {
-        font-size: 16px;
-      }
+      .container { padding: 24px; }
+      .intro { font-size: 18px; }
+      .click-prompt { font-size: 14px; }
+      .title { font-size: 20px; }
+      .quote { font-size: 16px; }
     }
   </style>
 </head>
 <body>
-  <div class="fade-screen"></div>
-  <div class="container">
-    <div class="title">후즈아트가 당신에게 전하는 한마디</div>
+  <div class="container" id="container">
+    <div class="intro" id="intro">당신에게 건네는 작은 위로</div>
+    <div class="click-prompt" id="clickPrompt">화면을 클릭해주세요</div>
+    <div class="title" id="title">후즈아트가 당신에게 전하는 한마디</div>
     <div class="quote" id="quote"></div>
-    <div class="signature" id="signature">— 어느 만화 속 등장인물의 대사 중</div>
+    <div class="signature" id="signature">— 어느 만화 속 등장인물 중</div>
     <div class="subtitle" id="subtitle">이 한마디가 당신의 하루에 작은 울림이 되기를</div>
   </div>
-
+  <audio id="bgm" preload="auto">
+    <source src="./bgm/Your New Home.mp3" type="audio/mpeg">
+  </audio>
   <script>
     const quotes = [
       "후즈아트에 심장을 바쳐라.",
@@ -125,31 +114,49 @@
       "울지마라, 전국 대회는 이제 막 시작했을 뿐이야···."
     ];
 
-    const selected = quotes[Math.floor(Math.random() * quotes.length)];
-    const target = document.getElementById("quote");
+    const intro = document.getElementById("intro");
+    const clickPrompt = document.getElementById("clickPrompt");
+    const title = document.getElementById("title");
+    const quote = document.getElementById("quote");
     const signature = document.getElementById("signature");
     const subtitle = document.getElementById("subtitle");
+    const bgm = document.getElementById("bgm");
     let i = 0;
 
-    function typeEffect() {
-      if (i < selected.length) {
-        target.textContent += selected.charAt(i);
+    function typeEffect(text) {
+      if (i < text.length) {
+        quote.textContent += text.charAt(i);
         i++;
-        setTimeout(typeEffect, Math.random() * 40 + 60);
+        setTimeout(() => typeEffect(text), Math.random() * 40 + 60);
       } else {
         setTimeout(() => {
           signature.style.opacity = 1;
-        }, 500);
-
+        }, 300);
         setTimeout(() => {
           subtitle.style.opacity = 1;
-        }, 1500);
+        }, 800);
       }
     }
 
     window.onload = () => {
-      console.log("랜덤 문구 선택됨:", selected);
-      typeEffect();
+      intro.style.opacity = 1;
+      setTimeout(() => {
+        clickPrompt.style.opacity = 1;
+      }, 800);
+
+      document.body.addEventListener("click", () => {
+        bgm.play().catch(e => console.log('BGM 재생 실패:', e));
+        intro.style.opacity = 0;
+        clickPrompt.style.opacity = 0;
+        setTimeout(() => {
+          intro.style.visibility = "hidden";
+          clickPrompt.style.visibility = "hidden";
+          title.style.opacity = 1;
+          const selected = quotes[Math.floor(Math.random() * quotes.length)];
+          quote.style.opacity = 1;
+          typeEffect(selected);
+        }, 1000);
+      }, { once: true });
     };
   </script>
 </body>
