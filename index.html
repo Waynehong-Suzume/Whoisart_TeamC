@@ -152,6 +152,8 @@
     let buffer = "";
 
     function typeEffect(text) {
+      i = 0;
+      buffer = "";
       function typing() {
         if (i < text.length) {
           buffer += text.charAt(i);
@@ -176,7 +178,6 @@
         bgm.play().catch(e => console.log('BGM 재생 실패:', e));
         intro.style.opacity = 0;
         clickPrompt.style.opacity = 0;
-
         setTimeout(() => {
           intro.style.visibility = "hidden";
           clickPrompt.style.visibility = "hidden";
@@ -187,11 +188,9 @@
           const source = sources[index];
 
           quote.innerHTML = "";
-          i = 0;
-          buffer = "";
+          signature.textContent = source;
           signature.style.opacity = 0;
           subtitle.style.opacity = 0;
-          signature.textContent = source;
 
           typeEffect(selected);
         }, 1000);
