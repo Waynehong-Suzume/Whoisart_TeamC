@@ -203,8 +203,13 @@
           signature.textContent = source;
           signature.style.opacity = 0;
           subtitle.style.opacity = 0;
+          i=0;
 
+        setTimeout(() => {
+          quote.style.opacity = 1;
           typeEffect(selected);
+        }, 600);
+
         }, 1000);
       }, { once: true });
     };
