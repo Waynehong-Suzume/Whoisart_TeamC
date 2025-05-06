@@ -157,20 +157,28 @@
       buffer = "";
       quote.style.opacity = 1;
 
-      function typing() {
-        if (i < text.length) {
-          buffer += text.charAt(i);
-          quote.innerHTML = buffer.replaceAll("||", "<br>");
-          i++;
-          setTimeout(typing, Math.random() * 40 + 60);
-        } else {
-          setTimeout(() => { signature.style.opacity = 1; }, 300);
-          setTimeout(() => { subtitle.style.opacity = 1; }, 800);
-        }
-      }
+      const finalText = text.replaceAll("||", "\u0001");
 
-      typing();
+  function typing() {
+    if (i < finalText.length) {
+      const char = finalText.charAt(i);
+      if (char === "\u0001") {
+        buffer += "<br>";
+        quote.innerHTML = buffer;
+      } else {
+        buffer += char;
+        quote.innerHTML = buffer;
+      }
+      i++;
+      setTimeout(typing, Math.random() * 40 + 60);
+    } else {
+      setTimeout(() => { signature.style.opacity = 1; }, 300);
+      setTimeout(() => { subtitle.style.opacity = 1; }, 800);
     }
+  }
+
+  typing();
+}
 
     window.onload = () => {
       intro.style.opacity = 1;
